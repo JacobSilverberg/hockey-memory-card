@@ -5,7 +5,7 @@ function Modal({ modalIsOpen, setModalIsOpen, modalMessage }) {
             <div className="modalContent">
                 <h2>{modalMessage}</h2>
                 <button className="modalBtn" onClick={() => setModalIsOpen(false)}>
-                Play!
+                    Play!
                 </button>
             </div>
             </div>

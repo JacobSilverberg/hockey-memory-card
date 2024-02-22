@@ -8,31 +8,31 @@ function App({ score, bestScore, setScore, setBestScore }) {
     const [players, setPlayers] = useState(playerList);
     const [modalIsOpen, setModalIsOpen] = useState(true);
     const [modalMessage, setModalMessage] = useState(
-    "Welcome to the Hockey memory game! Try not to click the same player twice!"
+        "Welcome to the Hockey memory game! Try not to click the same player twice!"
     );
 
     const randomize = () => {
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
     }
-    const shuffledGames = shuffleArray(players);
-    const reRenderedGames = shuffledGames.map((game) => {
-        game.id = uuid();
-        return game;
+    const shuffledPlayers = shuffleArray(players);
+    const reRenderedPlayers = shuffledPlayers.map((player) => {
+        player.id = uuid();
+        return player;
     });
-    setPlayers(reRenderedGames);
+    setPlayers(reRenderedPlayers);
     };
 
     const resetGame = () => {
     setScore(0);
     setPlayers(
-        players.map((game) => {
-        game.clicked = false;
-        return game;
+        players.map((player) => {
+        player.clicked = false;
+        return player;
         })
     );
     randomize();
@@ -40,23 +40,23 @@ function App({ score, bestScore, setScore, setBestScore }) {
     };
 
     const handleClick = (id) => {
-    let currentGame = players.filter((game) => game.id === id)[0];
-    if (currentGame.clicked) {
+    let currentPlayer = players.filter((player) => player.id === id)[0];
+    if (currentPlayer.clicked) {
         setModalMessage("Game Over! Try again?");
         resetGame();
         return;
     } else {
-        currentGame.clicked = true;
+        currentPlayer.clicked = true;
         setScore((score) => score + 1);
         if (score >= bestScore) {
             setBestScore((score) => score + 1);
         }
         setPlayers(
-            players.map((game) => {
-                if (game.id === currentGame.id) {
-                return currentGame;
+            players.map((player) => {
+                if (player.id === currentPlayer.id) {
+                    return currentPlayer;
                 }
-                return game;
+                return player;
             })
         );
         randomize();
